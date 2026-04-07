@@ -1,0 +1,1816 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programa de Parcerias Institucionais · Clínica Dra. Débora Camilo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+
+/* ===== TOKENS ===== */
+:root {
+  --ink: #4f5051;
+  --ink-soft: #7e7e7e;
+  --ink-mute: #c8c8c8;
+  --rose: #bf7c7c;
+  --rose-deep: #9d6262;
+  --rose-soft: rgba(191,124,124,0.10);
+  --rose-line: rgba(191,124,124,0.25);
+  --paper: #ffffff;
+  --cream: #f7f7f7;
+  --cream-2: #dcdcdc;
+  --line: #dcdcdc;
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans: 'Montserrat', system-ui, sans-serif;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --r: 12px;
+}
+
+/* ===== BASE ===== */
+html {
+  background: linear-gradient(135deg, #ebebeb 0%, #f4f4f4 30%, #ffffff 60%, #ffffff 100%);
+  background-attachment: fixed;
+}
+
+body {
+  font-family: var(--sans);
+  font-size: 18px;
+  line-height: 1.75;
+  color: var(--ink);
+  background: transparent;
+  overflow-x: hidden;
+}
+
+/* ===== UTILITY ===== */
+.container { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 1.25rem; }
+.container-wide { max-width: 1320px; }
+.section { padding: 3rem 0; }
+@media (min-width: 768px) { .section { padding: 4.5rem 0; } }
+@media (min-width: 1024px) { .section { padding: 5.5rem 0; } }
+
+.kicker {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--rose);
+  margin-bottom: 1rem;
+}
+.kicker-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+.kicker-line::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 1px;
+  background: var(--rose);
+  flex-shrink: 0;
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.section-title em { font-style: italic; color: var(--rose); }
+.section-lead {
+  font-size: 15px;
+  color: var(--ink-soft);
+  line-height: 1.75;
+  max-width: 620px;
+  margin-top: 1.25rem;
+}
+
+/* ===== SCROLL ANIMATIONS ===== */
+.observe {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.75s var(--ease), transform 0.75s var(--ease);
+}
+.observe.in-view { opacity: 1; transform: translateY(0); }
+.observe-left { opacity: 0; transform: translateX(-28px); transition: opacity 0.75s var(--ease), transform 0.75s var(--ease); }
+.observe-left.in-view { opacity: 1; transform: translateX(0); }
+.observe-right { opacity: 0; transform: translateX(28px); transition: opacity 0.75s var(--ease), transform 0.75s var(--ease); }
+.observe-right.in-view { opacity: 1; transform: translateX(0); }
+.delay-1 { transition-delay: 0.08s; }
+.delay-2 { transition-delay: 0.16s; }
+.delay-3 { transition-delay: 0.24s; }
+.delay-4 { transition-delay: 0.32s; }
+.delay-5 { transition-delay: 0.40s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .observe, .observe-left, .observe-right { opacity: 1; transform: none; transition: none; }
+}
+
+/* ===== HERO ===== */
+.hero {
+  background: var(--ink) url('https://i.postimg.cc/DZv15RBk/bgwhite.png') center center / cover no-repeat;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 75% 50%, rgba(191,124,124,0.10) 0%, transparent 55%),
+    radial-gradient(ellipse at 15% 80%, rgba(191,124,124,0.05) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.hero-nav {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 1.25rem;
+  max-width: 1120px;
+  margin: 0 auto;
+  width: 100%;
+}
+.hero-logo { height: 40px; width: auto; }
+.hero-nav-cta {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  background: var(--rose);
+  color: #fff;
+  padding: 0.625rem 1.25rem;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transition: background 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.hero-nav-cta:hover { background: var(--rose-deep); transform: translateY(-1px); }
+@media (min-width: 640px) { .hero-nav-cta { display: flex; } }
+
+.hero-body {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  justify-items: center;
+  gap: 2.5rem;
+  padding: 2rem 1.25rem 3rem;
+  max-width: 1300px;
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+@media (min-width: 768px) {
+  .hero-body {
+    grid-template-columns: 1fr 1fr;
+    justify-items: stretch;
+    gap: 3.5rem;
+    padding: 3rem 2rem 4rem;
+    min-height: calc(100svh - 80px);
+  }
+}
+@media (min-width: 1024px) {
+  .hero-body { grid-template-columns: 1fr 1fr; gap: 5rem; padding: 3rem 3rem 5rem; }
+}
+
+.hero-copy { color: var(--ink); align-self: center; }
+.hero-image-wrap { align-self: center; width: 100%; display: flex; justify-content: center; }
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--rose);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.9s var(--ease) 0.2s forwards;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px; height: 1px;
+  background: var(--rose);
+  flex-shrink: 0;
+}
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(2.8rem, 7vw, 5rem);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: #7e7e7e;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.9s var(--ease) 0.35s forwards;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--rose);
+  display: block;
+}
+.hero-sub {
+  font-size: 14px;
+  line-height: 1.75;
+  color: #7e7e7e;
+  max-width: 480px;
+  margin-bottom: 2.5rem;
+  opacity: 0;
+  animation: fadeUp 0.9s var(--ease) 0.5s forwards;
+}
+.hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  opacity: 0;
+  animation: fadeUp 0.9s var(--ease) 0.65s forwards;
+}
+.btn-rose {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--rose);
+  color: #fff;
+  padding: 0.875rem 1.75rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  transition: all 0.3s var(--ease);
+}
+.btn-rose:hover { background: var(--rose-deep); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(191,124,124,0.35); }
+.btn-ghost-light {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: #7e7e7e;
+  padding: 0.875rem 1.75rem;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 13px;
+  border: 1px solid #7e7e7e;
+  transition: all 0.3s var(--ease);
+}
+.btn-ghost-light:hover { background: var(--cream); color: var(--ink); border-color: #545454; }
+
+.hero-sign {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255,255,255,0.10);
+  opacity: 0;
+  animation: fadeUp 0.9s var(--ease) 0.78s forwards;
+}
+.hero-sign-name {
+  font-family: var(--serif);
+  font-size: 15px;
+  color: rgba(255,255,255,0.85);
+}
+.hero-sign-role {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-top: 3px;
+}
+
+.hero-image-wrap {
+  position: relative;
+  opacity: 0;
+  animation: fadeUp 1s var(--ease) 0.5s forwards;
+  padding: 0;
+}
+
+.hero-duo {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.hero-duo-back {
+  display: none;
+  width: 58%;
+  height: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 5px solid #ffffff;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.18);
+  z-index: 1;
+}
+.hero-duo-back img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-duo-front {
+  position: relative;
+  top: auto;
+  left: auto;
+  width: min(580px, 96%);
+  aspect-ratio: 1;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 5px solid #ffffff;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.14);
+  z-index: 2;
+}
+.hero-duo-front img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== TICKER ===== */
+.ticker-wrap {
+  background: var(--rose);
+  overflow: hidden;
+  padding: 10px 0;
+}
+.ticker-track {
+  display: inline-flex;
+  gap: 0;
+  white-space: nowrap;
+  animation: ticker 22s linear infinite;
+}
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.9);
+  padding: 0 2rem;
+}
+.ticker-dot {
+  width: 3px; height: 3px;
+  background: rgba(255,255,255,0.5);
+  border-radius: 50%;
+  margin-left: 2rem;
+}
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ===== BIO ===== */
+.bio-section { background: var(--rose); }
+.bio-grid {
+  display: grid;
+  gap: 3rem;
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .bio-grid { grid-template-columns: 1fr 1fr; gap: 4rem; }
+}
+@media (min-width: 1024px) {
+  .bio-grid { grid-template-columns: 1fr 1.1fr; gap: 6rem; }
+}
+.bio-image-wrap { position: relative; }
+.bio-image-wrap img {
+  width: 100%;
+  height: 480px;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: var(--r);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.14);
+}
+@media (min-width: 768px) { .bio-image-wrap img { height: 580px; } }
+.bio-image-badge {
+  position: absolute;
+  bottom: 20px; left: 20px;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(12px);
+  padding: 12px 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+}
+.bio-image-badge-name {
+  font-family: var(--serif);
+  font-size: 15px;
+  color: var(--ink);
+}
+.bio-image-badge-name em { font-style: italic; color: var(--rose); }
+.bio-image-badge-role {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-top: 2px;
+}
+
+.bio-copy .section-title { margin-top: 0; color: #fff; }
+.bio-copy .section-title em { color: #fff; font-style: italic; }
+.bio-copy .kicker { color: rgba(255,255,255,0.75); }
+.bio-copy .kicker-line::before { background: rgba(255,255,255,0.5); }
+.bio-prose {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  color: rgba(255,255,255,0.88);
+  font-size: 14.5px;
+  line-height: 1.8;
+}
+.bio-prose strong { color: #fff; font-weight: 600; }
+
+.bio-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 2rem;
+}
+.bio-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: 100px;
+  font-size: 12.5px;
+  color: var(--rose);
+  font-weight: 500;
+  background: rgba(255,255,255,0.92);
+  letter-spacing: 0.01em;
+}
+
+/* ===== EQUIPE ===== */
+.equipe-section { background: transparent; }
+.equipe-grid {
+  display: grid;
+  gap: 3rem;
+  align-items: center;
+}
+@media (min-width: 768px) { .equipe-grid { grid-template-columns: 1fr 1fr; gap: 5rem; } }
+@media (min-width: 1024px) { .equipe-grid { grid-template-columns: 1fr 1.1fr; } }
+
+.equipe-image-wrap { order: 2; }
+.equipe-copy { order: 1; }
+@media (max-width: 767px) { .equipe-image-wrap { order: unset; } .equipe-copy { order: unset; } }
+
+.equipe-image-wrap img {
+  width: 100%;
+  height: 460px;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: var(--r);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.14);
+}
+@media (min-width: 768px) { .equipe-image-wrap img { height: 560px; } }
+
+.equipe-specs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.equipe-spec {
+  background: var(--cream);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 1.125rem 1.25rem;
+  transition: border-color 0.3s var(--ease);
+}
+.equipe-spec:hover { border-color: var(--rose-line); }
+.equipe-spec-title {
+  font-weight: 700;
+  font-size: 12.5px;
+  color: var(--ink);
+  margin-bottom: 5px;
+}
+.equipe-spec-text {
+  font-size: 12px;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+
+/* ===== CLINICA ===== */
+.clinica-section { background: transparent; }
+.clinica-grid {
+  display: grid;
+  gap: 2.5rem;
+  align-items: start;
+}
+@media (min-width: 768px) { .clinica-grid { grid-template-columns: 1.2fr 1fr; gap: 4rem; } }
+
+.address-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(84,84,84,0.08);
+}
+.address-card-eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rose);
+  margin-bottom: 0.75rem;
+}
+.address-card-title {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  color: var(--ink);
+}
+.address-card-title em { font-style: italic; color: var(--rose); }
+.address-lines {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+.address-lines strong { color: var(--ink); font-weight: 600; }
+.address-note {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+  font-style: italic;
+  font-family: var(--serif);
+  color: var(--ink-mute);
+  line-height: 1.65;
+}
+
+.clinica-img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  border-radius: var(--r);
+  margin-top: 1.5rem;
+}
+@media (min-width: 768px) { .clinica-img { display: none; } }
+
+/* ===== ÁREAS ===== */
+.areas-section { background: linear-gradient(135deg, #545454, #2e2e2e); }
+.areas-section .section-title { color: #fff; }
+.areas-section .section-lead { color: rgba(255,255,255,0.55); }
+.areas-section .kicker { color: var(--rose); }
+
+.pillars-grid {
+  display: grid;
+  gap: 1px;
+  margin-top: 3rem;
+  background: rgba(255,255,255,0.07);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+@media (min-width: 768px) { .pillars-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.pillar {
+  background: rgba(255,255,255,0.03);
+  padding: 2.5rem;
+  transition: background 0.3s var(--ease);
+}
+.pillar:hover { background: rgba(255,255,255,0.065); }
+.pillar-num {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rose);
+  margin-bottom: 0.75rem;
+}
+.pillar-title {
+  font-family: var(--serif);
+  font-size: 1.9rem;
+  font-style: italic;
+  color: #fff;
+  margin-bottom: 1rem;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.pillar-desc {
+  font-size: 13.5px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.75;
+  margin-bottom: 1.5rem;
+}
+.pillar-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.pillar-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.68);
+}
+.pillar-list li::before {
+  content: '';
+  display: block;
+  width: 4px; height: 4px;
+  background: var(--rose);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ===== ATENDIMENTO ===== */
+.atend-section { background: transparent; }
+.atend-grid {
+  display: grid;
+  gap: 3rem;
+  align-items: center;
+}
+@media (min-width: 768px) { .atend-grid { grid-template-columns: 1fr 1fr; gap: 5rem; } }
+
+.atend-image-wrap img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  border-radius: var(--r);
+}
+@media (min-width: 768px) { .atend-image-wrap img { height: 520px; } }
+
+.commitments {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.commitment {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 1.25rem;
+  background: var(--cream);
+  border-radius: 8px;
+  border: 1px solid var(--line);
+}
+.commitment-icon {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  background: var(--rose-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--rose);
+}
+.commitment-title { font-weight: 600; font-size: 13.5px; color: var(--ink); margin-bottom: 3px; }
+.commitment-desc { font-size: 12.5px; color: var(--ink-soft); line-height: 1.65; }
+
+/* ===== RESULTADOS ===== */
+.results-section { background: transparent; }
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 2.5rem;
+}
+@media (min-width: 640px) { .results-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1024px) { .results-grid { gap: 16px; } }
+
+.result-item {
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--cream-2);
+  position: relative;
+}
+.result-item img {
+  width: 100%; height: auto;
+  display: block;
+  transition: transform 0.6s var(--ease);
+}
+.result-item:hover img { transform: scale(1.04); }
+.result-label {
+  position: absolute;
+  top: 10px; left: 10px;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(8px);
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.result-cta-card {
+  background: linear-gradient(135deg, #545454, #2e2e2e);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  min-height: 140px;
+  text-align: center;
+}
+.result-cta-card-text {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-style: italic;
+  color: #fff;
+  line-height: 1.3;
+}
+.result-cta-card-text span { color: var(--rose); }
+.result-cta-card-sub {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  margin-top: 8px;
+}
+
+/* ===== PARCERIAS ===== */
+.parcerias-section { background: linear-gradient(135deg, #545454, #2e2e2e); }
+.parcerias-section .section-title { color: #fff; }
+.parcerias-section .section-title em { color: var(--rose); }
+.parcerias-section .kicker { color: var(--rose); }
+.parcerias-section .kicker-line::before { background: var(--rose); }
+.parcerias-section .parceria-p { color: rgba(255,255,255,0.55); }
+.parcerias-section .parceria-p:first-child { color: rgba(255,255,255,0.85); }
+.parceria-layout {
+  display: grid;
+  gap: 2.5rem;
+  align-items: start;
+}
+@media (min-width: 768px) {
+  .parceria-layout { grid-template-columns: 1fr 2fr; gap: 5rem; align-items: center; }
+}
+.parceria-header .section-title { font-size: clamp(2.4rem, 5vw, 3.8rem); }
+.parceria-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.parceria-p {
+  font-size: 16px;
+  line-height: 1.85;
+  color: var(--ink-soft);
+}
+.parceria-p:first-child {
+  font-size: 17px;
+  color: var(--ink);
+  font-weight: 400;
+}
+
+/* ===== MODALIDADES ===== */
+.modal-section { background: var(--cream); }
+.formats-grid {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+}
+@media (min-width: 768px) { .formats-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.format-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 2rem;
+  transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+.format-card:hover {
+  border-color: var(--rose-line);
+  box-shadow: 0 8px 32px rgba(191,124,124,0.07);
+}
+.format-num {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rose);
+  margin-bottom: 0.75rem;
+}
+.format-title { font-weight: 700; font-size: 14.5px; color: var(--ink); margin-bottom: 0.875rem; }
+.format-text { font-size: 13.5px; color: var(--ink-soft); line-height: 1.8; }
+.format-text strong { color: var(--ink); font-weight: 600; }
+
+/* ===== O QUE A EMPRESA GANHA ===== */
+.ganhos-section { background: var(--cream); }
+.ganhos-grid {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 3rem;
+}
+@media (min-width: 640px) { .ganhos-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .ganhos-grid { grid-template-columns: repeat(3, 1fr); } }
+.ganho-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 2rem;
+  box-shadow: 0 4px 24px rgba(84,84,84,0.06);
+  transition: box-shadow 0.3s var(--ease), transform 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+.ganho-card:hover {
+  box-shadow: 0 16px 48px rgba(84,84,84,0.13);
+  transform: translateY(-5px);
+  border-color: var(--rose-line);
+}
+.ganho-icon {
+  width: 44px; height: 44px;
+  background: var(--rose-soft);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--rose);
+  margin-bottom: 1.25rem;
+  flex-shrink: 0;
+}
+.ganho-icon svg { width: 22px; height: 22px; }
+.ganho-title {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  color: var(--ink);
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+.ganho-text { font-size: 13px; color: var(--ink-soft); line-height: 1.82; }
+
+/* ===== QUEM SOMOS ===== */
+.quemsomos-section { background: transparent; }
+.quemsomos-grid {
+  display: grid;
+  gap: 3rem;
+  align-items: center;
+}
+@media (min-width: 768px) { .quemsomos-grid { grid-template-columns: 1fr 1fr; gap: 5rem; } }
+.quemsomos-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+}
+.qs-stat {
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--cream);
+}
+.qs-stat-num {
+  font-family: var(--serif);
+  font-size: 2.4rem;
+  font-weight: 400;
+  color: var(--rose);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.qs-stat-label { font-size: 12px; color: var(--ink-soft); margin-top: 6px; line-height: 1.5; }
+.quemsomos-img { position: relative; }
+.quemsomos-img img {
+  width: 100%;
+  height: 460px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: var(--r);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.14);
+}
+@media (min-width: 768px) { .quemsomos-img img { height: 540px; } }
+
+.quemsomos-badge {
+  position: absolute;
+  bottom: -32px;
+  right: 24px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: var(--rose);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 40px rgba(191,124,124,0.6), 0 4px 12px rgba(0,0,0,0.14);
+  border: 2px solid #fff;
+  overflow: hidden;
+}
+.quemsomos-badge img {
+  width: 140px !important;
+  height: auto !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  border-radius: 0 !important;
+  filter: brightness(10);
+}
+
+/* ===== CTA FINAL ===== */
+.cta-final-section {
+  background: linear-gradient(135deg, #545454, #2e2e2e);
+  text-align: center;
+}
+.cta-final-inner {
+  max-width: 680px;
+  margin: 0 auto;
+}
+.cta-final-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  font-weight: 400;
+  color: #fff;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.25rem;
+}
+.cta-final-title em { color: var(--rose); font-style: italic; }
+.cta-final-sub { font-size: 15px; color: rgba(255,255,255,0.5); line-height: 1.75; margin-bottom: 2.5rem; }
+.cta-final-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+/* ===== COMO FUNCIONA ===== */
+.steps-section { background: linear-gradient(135deg, #545454, #2e2e2e); }
+.steps-section .section-title { color: #fff; }
+.steps-section .section-lead { color: rgba(255,255,255,0.5); }
+
+.steps-grid {
+  display: grid;
+  gap: 1px;
+  margin-top: 3rem;
+  background: rgba(255,255,255,0.07);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+@media (min-width: 640px) { .steps-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .steps-grid { grid-template-columns: repeat(4, 1fr); } }
+
+.step {
+  background: rgba(255,255,255,0.03);
+  padding: 2.5rem 2rem;
+  transition: background 0.3s var(--ease);
+}
+.step:hover { background: rgba(255,255,255,0.065); }
+.step-num {
+  font-family: var(--serif);
+  font-size: 3rem;
+  font-style: italic;
+  color: var(--rose);
+  opacity: 0.5;
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+.step-title { font-weight: 700; font-size: 13.5px; color: #fff; margin-bottom: 0.75rem; }
+.step-text { font-size: 13px; color: rgba(255,255,255,0.48); line-height: 1.75; }
+
+.steps-note {
+  margin-top: 2rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--r);
+  padding: 1.75rem 2rem;
+}
+.steps-note-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rose);
+  margin-bottom: 0.5rem;
+}
+.steps-note-title {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-style: italic;
+  color: #fff;
+  margin-bottom: 0.75rem;
+}
+.steps-note-text { font-size: 13.5px; color: rgba(255,255,255,0.5); line-height: 1.75; }
+
+/* ===== DEPOIMENTOS ===== */
+.dep-section { background: transparent; }
+.rating-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid rgba(255,255,255,0.85);
+  border-radius: var(--r);
+  padding: 1.75rem 2rem;
+  margin-top: 2rem;
+  margin-bottom: 2.5rem;
+  box-shadow: 0 8px 32px rgba(84,84,84,0.10), 0 1px 0 rgba(255,255,255,0.9) inset;
+}
+.rating-score {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.rating-google-logo { display: flex; align-items: center; flex-shrink: 0; }
+.rating-num {
+  font-family: var(--sans);
+  font-size: 3.5rem;
+  font-weight: 300;
+  color: var(--ink);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.rating-num em { font-size: 2.5rem; font-style: normal; font-weight: 300; }
+.rating-of { font-family: var(--sans); font-size: 13px; font-weight: 300; color: var(--ink-soft); }
+.rating-stars { display: flex; gap: 3px; }
+.rating-stars svg { width: 20px; height: 20px; fill: #f5b942; }
+.rating-divider { width: 1px; height: 36px; background: var(--line); }
+@media (max-width: 500px) { .rating-divider { display: none; } }
+.rating-info-label { font-family: var(--sans); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 3px; }
+.rating-info-text { font-family: var(--sans); font-size: 1rem; font-weight: 500; color: var(--ink-soft); }
+.rating-info-text em { font-style: normal; color: var(--ink-soft); }
+
+.dep-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+@media (min-width: 640px) { .dep-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; } }
+@media (min-width: 1024px) { .dep-grid { grid-template-columns: repeat(4, 1fr); } }
+
+.dep-item {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.09);
+  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
+}
+.dep-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 48px rgba(0,0,0,0.13);
+}
+.dep-item img { width: 100%; height: auto; display: block; }
+
+/* ===== CONTATO ===== */
+.contato-section { background: transparent; }
+.contato-grid {
+  display: grid;
+  gap: 2.5rem;
+  margin-top: 3rem;
+}
+@media (min-width: 768px) { .contato-grid { grid-template-columns: 1fr 1fr; gap: 4rem; } }
+
+.channels { display: flex; flex-direction: column; gap: 12px; }
+.channel {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.channel:hover { border-color: var(--rose-line); transform: translateX(4px); }
+.channel-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: var(--rose-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--rose);
+  flex-shrink: 0;
+}
+.channel-icon svg { width: 18px; height: 18px; }
+.channel-label { font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 1px; }
+.channel-value { font-size: 14px; font-weight: 600; color: var(--ink); }
+
+.cta-block {
+  background: linear-gradient(135deg, #545454, #2e2e2e);
+  border-radius: var(--r);
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.cta-block-title {
+  font-family: var(--serif);
+  font-size: 1.9rem;
+  font-style: italic;
+  color: #fff;
+  line-height: 1.2;
+}
+.cta-block-title em { color: var(--rose); }
+.cta-block-text { font-size: 13.5px; color: rgba(255,255,255,0.55); line-height: 1.75; }
+.btn-wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #25D366;
+  color: #fff;
+  padding: 1rem 1.75rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.3s var(--ease);
+  align-self: flex-start;
+}
+.btn-wa:hover { background: #1da851; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,0.3); }
+.btn-wa svg { width: 20px; height: 20px; }
+
+/* ===== FOOTER ===== */
+footer {
+  background: linear-gradient(135deg, #545454, #2e2e2e);
+  padding: 2.5rem 0;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.footer-logo { height: 56px; opacity: 0.85; filter: brightness(10); }
+.footer-copy {
+  font-size: 11px;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.04em;
+}
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+}
+.footer-links a {
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: rgba(255,255,255,0.7); }
+
+/* ===== MOBILE RESPONSIVENESS ===== */
+@media (max-width: 767px) {
+  /* Hero */
+  .hero-nav { padding: 0.875rem 1rem; }
+  .hero-nav-logo { height: 32px; }
+  .hero-body { gap: 2rem; padding: 1.5rem 1rem 2.5rem; }
+  .hero-title { font-size: clamp(2.2rem, 9vw, 3rem); margin-bottom: 1rem; }
+  .hero-sub { font-size: 13.5px; margin-bottom: 1.75rem; }
+  .hero-ctas { flex-direction: column; gap: 10px; }
+  .btn-rose, .btn-ghost-light { width: 100%; justify-content: center; padding: 0.875rem 1.25rem; }
+  .hero-duo { margin-top: 0; }
+  .hero-duo-front { width: min(480px, 92%); }
+  .hero-sign { display: none; }
+
+  /* Ticker */
+  .ticker-wrap { padding: 0.875rem 0; }
+
+  /* Bio */
+  .bio-grid { grid-template-columns: 1fr !important; gap: 2rem; }
+  .bio-image-wrap img { height: 320px; }
+  .bio-badges { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .bio-badge { padding: 0.875rem 1rem; }
+
+  /* Equipe */
+  .equipe-grid { grid-template-columns: 1fr !important; gap: 2rem; }
+  .equipe-image-wrap img { height: 320px; }
+  .equipe-specs-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  /* Ganhos */
+  .ganhos-grid { grid-template-columns: 1fr !important; }
+  /* Quem somos */
+  .quemsomos-grid { grid-template-columns: 1fr !important; gap: 2rem; }
+  .quemsomos-img img { height: 280px; }
+  .quemsomos-stats { grid-template-columns: 1fr 1fr; }
+  /* CTA final */
+  .cta-final-btns { flex-direction: column; align-items: center; }
+  /* Parcerias */
+  .parceria-layout { grid-template-columns: 1fr !important; gap: 2rem; }
+  .parceria-p { font-size: 15px; }
+  .parceria-p:first-child { font-size: 16px; }
+
+  /* Áreas */
+  .pillars-grid { grid-template-columns: 1fr !important; gap: 1px; }
+  .pillar { padding: 1.75rem; }
+
+  /* Resultados */
+  .results-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+
+  /* Modalidades */
+  .formats-grid { grid-template-columns: 1fr !important; gap: 1rem; }
+  .format-card { padding: 1.5rem; }
+
+  /* Como Funciona */
+  .steps-grid { grid-template-columns: 1fr 1fr !important; gap: 1rem; }
+  .step-card { padding: 1.5rem; }
+
+  /* Depoimentos */
+  .rating-bar { padding: 1.25rem; flex-direction: column; gap: 1rem; text-align: center; }
+  .rating-divider { display: none; }
+  .dep-grid { grid-template-columns: 1fr 1fr !important; gap: 8px; }
+
+  /* Contato */
+  .contato-grid { grid-template-columns: 1fr !important; gap: 2.5rem; }
+  .cta-block { padding: 1.75rem; }
+  .btn-wa { width: 100%; justify-content: center; }
+  .channels { gap: 0.625rem; }
+  .channel { padding: 1rem; }
+
+  /* Footer */
+  .footer-inner { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+  .footer-links { gap: 1rem; }
+}
+
+@media (max-width: 480px) {
+  .hero-duo-front { width: min(260px, 75%); }
+  .results-grid { grid-template-columns: 1fr; }
+  .dep-grid { grid-template-columns: 1fr !important; }
+  .bio-badges { grid-template-columns: 1fr; }
+  .equipe-specs-grid { grid-template-columns: 1fr; }
+  .steps-grid { grid-template-columns: 1fr !important; }
+  .hero-eyebrow { font-size: 9px; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ===== 01. HERO ===== -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="hero-copy">
+      <div class="hero-eyebrow">Documento institucional · 2026</div>
+      <h1 class="hero-title">
+        Programa de
+        <em>Parcerias Institucionais.</em>
+      </h1>
+      <p class="hero-sub">
+        Conheça a Clínica Dra. Débora Camilo, nossas especialidades, resultados clínicos e os formatos de parceria disponíveis para empresas, instituições e organizações associativas.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn-rose" href="#contato">
+          Quero conversar sobre parceria
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a class="btn-ghost-light" href="#areas">Ver especialidades</a>
+      </div>
+    </div>
+    <div class="hero-image-wrap">
+      <div class="hero-duo">
+        <div class="hero-duo-back">
+          <img src="http://www.dradeboracamilo.com.br/wp-content/webp-express/webp-images/uploads/2024/11/Rectangle-37.png.webp" alt="Clínica Dra. Débora Camilo" loading="eager">
+        </div>
+        <div class="hero-duo-front">
+          <img src="https://i.postimg.cc/hjcRYGRb/Co-pia-de-Arquivo-010.png" alt="Dra. Débora Camilo" loading="eager">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TICKER ===== -->
+<div class="ticker-wrap" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ticker-item">Ortodontia<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Invisalign Doctor<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Estética Dental<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Reabilitação Oral<span class="ticker-dot"></span></span>
+    <span class="ticker-item">14 anos de clínica<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Nota 5,0 no Google<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Zona Norte · RJ<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Ortodontia<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Invisalign Doctor<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Estética Dental<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Reabilitação Oral<span class="ticker-dot"></span></span>
+    <span class="ticker-item">14 anos de clínica<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Nota 5,0 no Google<span class="ticker-dot"></span></span>
+    <span class="ticker-item">Zona Norte · RJ<span class="ticker-dot"></span></span>
+  </div>
+</div>
+
+<!-- ===== 02. POR QUE ESSA PARCERIA EXISTE ===== -->
+<section class="parcerias-section section" id="parcerias">
+  <div class="container">
+    <div class="parceria-layout observe">
+      <div class="parceria-header">
+        <div class="kicker-line"><span class="kicker">Por que fazer parcerias?</span></div>
+        <h2 class="section-title"><em>A parceria.</em></h2>
+      </div>
+      <div class="parceria-body">
+        <p class="parceria-p">Acreditamos que cuidar de pessoas é um valor compartilhado. Quando uma empresa, associação ou instituição de ensino oferece acesso a saúde bucal de qualidade aos seus colaboradores, associados ou alunos, ela não está apenas distribuindo um benefício: está demonstrando que se importa de verdade com quem faz parte do seu universo.</p>
+        <p class="parceria-p">A saúde oral impacta diretamente a qualidade de vida, a autoestima e o bem-estar geral das pessoas. Ignorá-la é ignorar uma dimensão real do cuidado humano. Organizações que levam isso a sério se diferenciam e constroem vínculos mais fortes com quem dependem para crescer.</p>
+        <p class="parceria-p">Nossa parceria nasce desse propósito comum. Trazemos a expertise clínica, a estrutura de atendimento e o compromisso com o resultado. Você traz o acesso às pessoas que merecem esse cuidado. Juntos, criamos algo que vai além de um desconto: uma ponte real entre quem precisa de saúde e quem sabe entregar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 03. O QUE A SUA EMPRESA GANHA ===== -->
+<section class="ganhos-section section" id="ganhos">
+  <div class="container">
+    <div class="observe">
+      <div class="kicker-line"><span class="kicker">Contrapartidas da parceria</span></div>
+      <h2 class="section-title">O que a sua empresa <em>ganha.</em></h2>
+      <p class="section-lead">Cada parceria é construída sob medida, mas as contrapartidas que estruturamos são consistentes. Veja o que a sua organização pode acessar.</p>
+    </div>
+    <div class="ganhos-grid">
+
+      <article class="ganho-card observe delay-1">
+        <div class="ganho-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+        </div>
+        <div class="ganho-title">Parceria Personalizada sob Medida</div>
+        <div class="ganho-text">Nossas empresas não precisam se encaixar em modelos prontos. Antes de qualquer proposta, sentamos juntos para entender o que faz sentido para o seu público e para a sua realidade. O formato da parceria nasce dessa conversa, com escopo, contrapartidas e cronograma construídos junto com você.</div>
+      </article>
+
+      <article class="ganho-card observe delay-2">
+        <div class="ganho-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <div class="ganho-title">Benefício Odontológico Exclusivo</div>
+        <div class="ganho-text">Sua empresa pode oferecer ao seu público acesso à Clínica com condições exclusivas de atendimento, sem mensalidade, sem carência e sem burocracia de plano. Um benefício odontológico real, direto e de qualidade, que a sua empresa oferece sem precisar pagar por ele.</div>
+      </article>
+
+      <article class="ganho-card observe delay-3">
+        <div class="ganho-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        </div>
+        <div class="ganho-title">Acesso Recíproco ao Público</div>
+        <div class="ganho-text">Sua empresa fala com o seu público. Nós falamos com o nosso. Cada um pelo seu canal, com a sua voz. O resultado é que o seu público descobre a nossa clínica pela boca de quem ele já respeita. Quando a indicação vem de quem o público já confia, ela não parece publicidade. Parece conselho.</div>
+      </article>
+
+      <article class="ganho-card observe delay-1">
+        <div class="ganho-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <div class="ganho-title">Checkup de Saúde Bucal da Equipe</div>
+        <div class="ganho-text">Aplicamos um instrumento de avaliação estruturado com os colaboradores da sua empresa e entregamos um relatório com o perfil de saúde bucal do grupo, os pontos críticos identificados e as recomendações para o próximo passo. Um documento para o relatório de bem-estar e o planejamento de benefícios.</div>
+      </article>
+
+
+      <article class="ganho-card observe delay-3">
+        <div class="ganho-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div class="ganho-title">Palestra e Ação Educativa</div>
+        <div class="ganho-text">Levamos conteúdo educativo sobre saúde bucal ao seu ambiente, em reuniões, semanas de saúde, eventos internos ou encontros. Sem oferta comercial, sem abordagem que constranja. Sua empresa aparece promovendo algo útil, humano e de qualidade. O que fica na memória é que foi a sua empresa que proporcionou aquilo.</div>
+      </article>
+
+      <article class="ganho-card observe delay-1">
+        <div class="ganho-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div class="ganho-title">Fidelização e Relacionamento com o Cliente</div>
+        <div class="ganho-text">Construímos com a sua empresa um calendário de relacionamento ativo, com ações planejadas para as datas em que o seu público está mais receptivo: Outubro Rosa, Novembro Azul, Dia das Mães, Volta às Aulas, Dia do Trabalhador. Cada data, um material. Sua empresa aparece cuidando mês a mês, com consistência e intenção.</div>
+      </article>
+
+      <article class="ganho-card observe delay-2">
+        <div class="ganho-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="ganho-title">Presença em Eventos e Datas Estratégicas</div>
+        <div class="ganho-text">Levamos a Clínica Dra. Débora Camilo aos eventos que a sua empresa já promove: assembleias, congressos, semanas de saúde, feiras internas, encontros de associados. Estande informativo, palestra, orientações preventivas, material de apoio, kits e brindes. A presença é educativa, sem abordagem comercial.</div>
+      </article>
+
+      <article class="ganho-card observe delay-3">
+        <div class="ganho-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        </div>
+        <div class="ganho-title">Protocolo de Encaminhamento Clínico</div>
+        <div class="ganho-text">Para parceiros da área da saúde, construímos um protocolo formal de cuidado compartilhado. Ficha de encaminhamento padronizada, canal de comunicação direto entre os profissionais e reunião periódica para alinhamento de casos. Os dois lados entregam um resultado clínico melhor sem precisar trabalhar mais.</div>
+      </article>
+
+      <article class="ganho-card observe delay-1">
+        <div class="ganho-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="ganho-title">Visibilidade Institucional Recíproca</div>
+        <div class="ganho-text">Sua empresa aparece nos nossos canais. Nós aparecemos nos seus. Posts conjuntos, menções institucionais, apresentações cruzadas para públicos que ainda não se conhecem. Nenhum dos dois paga pelo acesso ao público do outro. Os dois entregam mais valor a quem já os acompanha.</div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== 04. QUEM SOMOS ===== -->
+<section class="quemsomos-section section" id="quem-somos">
+  <div class="container">
+    <div class="quemsomos-grid">
+      <div class="observe-left">
+        <div class="kicker-line"><span class="kicker">Nossa clínica</span></div>
+        <h2 class="section-title">Odontologia<br>integrada na<br><em>Zona Norte.</em></h2>
+        <p class="section-lead" style="margin-top:1.25rem">Somos um espaço de odontologia integrada localizado em Todos os Santos, Rio de Janeiro. Atendemos adultos e crianças a partir dos 6 anos em ortodontia, estética dental, reabilitação oral e especialidades complementares.</p>
+        <p class="section-lead" style="margin-top:1rem">Nossa preocupação principal é o <strong style="color:var(--ink)">atendimento humanizado</strong>. Acreditamos que cada pessoa merece alcançar saúde e autoestima com um profissional experiente, ético e de confiança.</p>
+        <div class="quemsomos-stats">
+          <div class="qs-stat">
+            <div class="qs-stat-num">14+</div>
+            <div class="qs-stat-label">anos de prática clínica</div>
+          </div>
+          <div class="qs-stat">
+            <div class="qs-stat-num">5,0</div>
+            <div class="qs-stat-label">nota no Google Meu Negócio</div>
+          </div>
+          <div class="qs-stat">
+            <div class="qs-stat-num">+8</div>
+            <div class="qs-stat-label">especialidades clínicas</div>
+          </div>
+          <div class="qs-stat">
+            <div class="qs-stat-num">RJ</div>
+            <div class="qs-stat-label">Todos os Santos · Zona Norte</div>
+          </div>
+        </div>
+      </div>
+      <div class="quemsomos-img observe-right">
+        <img src="http://www.dradeboracamilo.com.br/wp-content/webp-express/webp-images/uploads/2024/11/Rectangle-37.png.webp" alt="Clínica Dra. Débora Camilo" loading="lazy">
+        <div class="quemsomos-badge">
+          <img src="https://i.postimg.cc/V6SHCTS3/1.png" alt="Logo Clínica Dra. Débora Camilo">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 05. DRA. DÉBORA ===== -->
+<section class="bio-section section" id="bio">
+  <div class="container">
+    <div class="bio-grid">
+      <div class="bio-image-wrap observe-left">
+        <img src="https://i.postimg.cc/28MnsC8W/Co_pia_de_IMG_2753.jpg" alt="Dra. Débora Camilo" loading="lazy">
+      </div>
+      <div class="bio-copy observe-right">
+        <div class="kicker-line"><span class="kicker">Quem assina nossa clínica</span></div>
+        <h2 class="section-title"><em>Dra. Débora Camilo.</em></h2>
+        <div class="bio-prose">
+          <p>Com 14 anos de experiência em atendimento clínico, a Dra. Débora Camilo é apaixonada por proporcionar cuidados odontológicos de excelência e transformar sorrisos. Sua trajetória reúne <strong>prática clínica intensa e atuação na docência</strong>, formando novos profissionais da odontologia.</p>
+          <p>Como CEO da própria clínica, lidera uma equipe dedicada à inovação e à melhoria contínua dos serviços, sempre com foco na saúde e no bem-estar dos pacientes.</p>
+          <p>Sua formação reúne <strong>especialização em Dentística</strong> (odontologia estética) e em <strong>Ortodontia e Ortopedia Facial</strong>, com Mestrado e Doutorado na área. Atua desde 2020 na equipe de Ortodontia da Aeronáutica e é certificada como <strong>Invisalign Doctor</strong>.</p>
+        </div>
+        <div class="bio-badges">
+          <span class="bio-badge">Especialista em Dentística</span>
+          <span class="bio-badge">Ortodontia &amp; Ortopedia Facial</span>
+          <span class="bio-badge">Mestrado e Doutorado</span>
+          <span class="bio-badge">Invisalign Doctor</span>
+          <span class="bio-badge">Aeronáutica desde 2020</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 06. EQUIPE E ESPECIALIDADES ===== -->
+<section class="equipe-section section" id="equipe">
+  <div class="container">
+    <div class="equipe-grid">
+      <div class="equipe-image-wrap observe-left">
+        <img src="https://i.postimg.cc/fLp39bqb/equipe.png" alt="Equipe da Clínica Dra. Débora Camilo" loading="lazy">
+      </div>
+      <div class="equipe-copy observe-right">
+        <div class="kicker-line"><span class="kicker">Nossa equipe</span></div>
+        <h2 class="section-title">Especialistas que <em>trabalham juntas.</em></h2>
+        <p class="section-lead">Contamos com um time de cirurgiãs-dentistas especializadas, cada uma com formação de pós-graduação em sua área de atuação. Aqui, cada profissional é referência no que faz.</p>
+        <div class="equipe-specs">
+          <div class="equipe-spec">
+            <div class="equipe-spec-title">Ortodontia &amp; Ortopedia Facial</div>
+            <div class="equipe-spec-text">Tratamentos de alinhamento dental para adultos e crianças, incluindo Invisalign e ortodontia interceptiva.</div>
+          </div>
+          <div class="equipe-spec">
+            <div class="equipe-spec-title">Estética &amp; Dentística</div>
+            <div class="equipe-spec-text">Clareamento, facetas, lentes de contato dental e planejamento digital do sorriso com foco em naturalidade.</div>
+          </div>
+          <div class="equipe-spec">
+            <div class="equipe-spec-title">Implantes &amp; Reabilitação</div>
+            <div class="equipe-spec-text">Reabilitação oral completa, implantes dentários, próteses fixas e removíveis com tecnologia digital.</div>
+          </div>
+          <div class="equipe-spec">
+            <div class="equipe-spec-title">Odontopediatria &amp; Prevenção</div>
+            <div class="equipe-spec-text">Atendimento especializado para crianças a partir dos 6 anos, com foco em educação e prevenção precoce.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="areas-section section" id="areas">
+  <div class="container">
+    <div class="observe">
+      <div class="kicker-line"><span class="kicker">O que tratamos</span></div>
+      <h2 class="section-title" style="color:#fff">Conheça nossos <em>serviços.</em></h2>
+      <p class="section-lead">Da ortodontia à reabilitação oral, oferecemos atendimento completo em três grandes especialidades. Tudo no mesmo espaço, com a mesma equipe dedicada.</p>
+    </div>
+    <div class="pillars-grid">
+      <article class="pillar observe delay-1">
+        <div class="pillar-num">Área 01</div>
+        <div class="pillar-title">Ortodontia</div>
+        <div class="pillar-desc">Corrigimos o posicionamento dental e a oclusão. Base do tratamento da maioria dos nossos pacientes adultos e também da ortodontia infantil interceptiva.</div>
+        <ul class="pillar-list">
+          <li>Aparelho convencional metálico</li>
+          <li>Brackets estéticos de safira</li>
+          <li>Alinhadores invisíveis (Invisalign)</li>
+          <li>Ortodontia infantil e interceptiva</li>
+          <li>Ortopedia facial</li>
+        </ul>
+      </article>
+      <article class="pillar observe delay-2">
+        <div class="pillar-num">Área 02</div>
+        <div class="pillar-title">Estética</div>
+        <div class="pillar-desc">Refinamos o sorriso após o alinhamento, com procedimentos minimamente invasivos e foco em resultado natural e duradouro.</div>
+        <ul class="pillar-list">
+          <li>Clareamento dental</li>
+          <li>Facetas e restaurações em resina</li>
+          <li>Facetas e lentes em porcelana</li>
+          <li>Recontornos estéticos</li>
+          <li>Planejamento digital do sorriso</li>
+        </ul>
+      </article>
+      <article class="pillar observe delay-3">
+        <div class="pillar-num">Área 03</div>
+        <div class="pillar-title">Reabilitação</div>
+        <div class="pillar-desc">Recuperamos dentes perdidos e restauramos a função mastigatória através de implantes, próteses e tratamentos restauradores complexos.</div>
+        <ul class="pillar-list">
+          <li>Implantes dentários</li>
+          <li>Próteses fixas e removíveis</li>
+          <li>Blocos e coroas em porcelana</li>
+          <li>Placas de bruxismo</li>
+          <li>Tratamento de canal (endodontia)</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 07. MODELOS DE PARCERIA ===== -->
+<section class="modal-section section" id="modalidades">
+  <div class="container">
+    <div class="observe">
+      <div class="kicker-line"><span class="kicker">Modalidades</span></div>
+      <h2 class="section-title">As modalidades <em>que oferecemos.</em></h2>
+      <p class="section-lead">Trabalhamos com quatro modalidades padronizadas de parceria, que adaptamos conforme o porte, o público e os objetivos de cada organização.</p>
+    </div>
+    <div class="formats-grid">
+      <article class="format-card observe delay-1">
+        <div class="format-num">Modalidade 01</div>
+        <div class="format-title">Convênio para colaboradores e associados</div>
+        <div class="format-text">Condições comerciais diferenciadas para grupos definidos, com fluxo de agendamento dedicado. Aplicável a empresas com benefícios complementares e a <strong>entidades como OAB, SENAI e SESI</strong>.</div>
+      </article>
+      <article class="format-card observe delay-2">
+        <div class="format-num">Modalidade 02</div>
+        <div class="format-title">Programas de prevenção e saúde bucal</div>
+        <div class="format-text">Ações educativas e preventivas: palestras técnicas, semanas de saúde e conteúdo institucional. Indicada para <strong>RH corporativo, instituições de ensino e organizações associativas</strong>.</div>
+      </article>
+      <article class="format-card observe delay-3">
+        <div class="format-num">Modalidade 03</div>
+        <div class="format-title">Atendimento executivo</div>
+        <div class="format-text">Atendemos <strong>lideranças, conselheiros e diretoria</strong> com protocolo prioritário e experiência adaptada à rotina executiva. Para empresas com benefícios diferenciados a cargos de gestão.</div>
+      </article>
+      <article class="format-card observe delay-4">
+        <div class="format-num">Modalidade 04</div>
+        <div class="format-title">Parceria sob desenho específico</div>
+        <div class="format-text">Para organizações cujo perfil não se enquadra nas modalidades anteriores, definimos o escopo em conjunto a partir de uma reunião inicial de diagnóstico.</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 08. COMO FUNCIONA ===== -->
+<section class="steps-section section" id="como-funciona">
+  <div class="container">
+    <div class="observe">
+      <div class="kicker-line"><span class="kicker">Como funciona</span></div>
+      <h2 class="section-title" style="color:#fff">Como formalizamos <em>uma parceria.</em></h2>
+      <p class="section-lead">Conduzimos a implementação em quatro etapas, com tempo médio de duas a quatro semanas entre o primeiro contato e o início do atendimento.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step observe delay-1">
+        <div class="step-num">01</div>
+        <div class="step-title">Reunião de Alinhamento</div>
+        <div class="step-text">Encontro inicial, presencial ou remoto, para entender o perfil da organização, o público a ser atendido e os objetivos institucionais.</div>
+      </div>
+      <div class="step observe delay-2">
+        <div class="step-num">02</div>
+        <div class="step-title">Proposta formal</div>
+        <div class="step-text">Proposta institucional escrita com escopo, modalidade aplicável, condições comerciais e termos operacionais da parceria.</div>
+      </div>
+      <div class="step observe delay-3">
+        <div class="step-num">03</div>
+        <div class="step-title">Formalização</div>
+        <div class="step-text">Assinatura do instrumento de parceria, definição dos fluxos de comunicação e protocolos de atendimento ao público vinculado.</div>
+      </div>
+      <div class="step observe delay-4">
+        <div class="step-num">04</div>
+        <div class="step-title">Início do atendimento</div>
+        <div class="step-text">Ativamos a parceria, abrimos a agenda dedicada e fazemos a comunicação ao público da organização conforme combinado.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 09. PROVA SOCIAL ===== -->
+<section class="results-section section" id="resultados">
+  <div class="container">
+    <div class="observe">
+      <div class="kicker-line"><span class="kicker">Resultados clínicos</span></div>
+      <h2 class="section-title">Alguns dos nossos <em>antes e depois.</em></h2>
+      <p class="section-lead">Resultados reais de pacientes que autorizaram o uso de imagem. Cada caso teve seu próprio plano, prazo e protocolo. Todos seguiram a mesma filosofia: planejamento detalhado, execução técnica e acompanhamento até o fim.</p>
+    </div>
+    <div class="results-grid">
+      <article class="result-item observe delay-1">
+        <img src="https://i.postimg.cc/7hH0sSLc/Modelo-3.png" alt="Resultado clínico 01" loading="lazy">
+      </article>
+      <article class="result-item observe delay-2">
+        <img src="https://i.postimg.cc/ZRy5J2vw/T2.png" alt="Resultado clínico 02" loading="lazy">
+      </article>
+      <article class="result-item observe delay-3">
+        <img src="https://i.postimg.cc/3RDx3V0B/T4.png" alt="Resultado clínico 03" loading="lazy">
+      </article>
+      <article class="result-item observe delay-1">
+        <img src="https://i.postimg.cc/wj2KnpF5/xxxx.jpg" alt="Resultado clínico 04" loading="lazy">
+      </article>
+      <article class="result-item observe delay-2">
+        <img src="https://i.postimg.cc/ZRy5J2vr/T1.png" alt="Resultado clínico 05" loading="lazy">
+      </article>
+      <a class="result-cta-card observe delay-3" href="https://instagram.com/dradeboracamilo" target="_blank" rel="noreferrer">
+        <div>
+          <img src="https://i.postimg.cc/V6SHCTS3/1.png" alt="Logo Clínica Dra. Débora Camilo" style="height:70px;width:auto;object-fit:contain;margin:0 auto 1.25rem;filter:brightness(10);">
+          <div class="result-cta-card-text">Veja mais resultados no <span>nosso Instagram!</span></div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="dep-section section" id="depoimentos">
+  <div class="container">
+    <div class="observe">
+      <div class="kicker-line"><span class="kicker">O que dizem nossos pacientes</span></div>
+      <h2 class="section-title">Nota máxima <em>no Google.</em></h2>
+      <p class="section-lead">Somos avaliados com nota 5,0 no Google, com dezenas de depoimentos de pacientes reais.</p>
+    </div>
+    <div class="rating-bar observe">
+      <div class="rating-google-logo">
+        <svg viewBox="0 0 24 24" width="32" height="32" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+      </div>
+      <div class="rating-score">
+        <div class="rating-num">5,<em>0</em></div>
+        <div class="rating-of">/ 5,0</div>
+      </div>
+      <div class="rating-stars" aria-label="5 estrelas">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <div class="rating-divider"></div>
+      <div>
+        <div class="rating-info-label">Avaliações no</div>
+        <div class="rating-info-text">Google <em>Meu Negócio</em></div>
+      </div>
+      <div class="rating-divider"></div>
+      <div>
+        <div class="rating-info-label">Pacientes atendidos</div>
+        <div class="rating-info-text"><em>Dezenas</em> de avaliações reais</div>
+      </div>
+    </div>
+    <div class="dep-grid">
+      <article class="dep-item observe delay-1"><img src="https://i.postimg.cc/T3QfVfXf/Captura-de-Tela-2026-04-07-a-s-07-17-24.png" alt="Depoimento Google" loading="lazy"></article>
+      <article class="dep-item observe delay-2"><img src="https://i.postimg.cc/cLT0R0NW/Captura-de-Tela-2026-04-07-a-s-07-17-54.png" alt="Depoimento Google" loading="lazy"></article>
+      <article class="dep-item observe delay-3"><img src="https://i.postimg.cc/x1gnvnSY/Captura-de-Tela-2026-04-07-a-s-07-18-09.png" alt="Depoimento Google" loading="lazy"></article>
+      <article class="dep-item observe delay-4"><img src="https://i.postimg.cc/3x330Wzr/Captura-de-Tela-2026-04-07-a-s-07-18-19.png" alt="Depoimento Google" loading="lazy"></article>
+      <article class="dep-item observe delay-1"><img src="https://i.postimg.cc/T3TT5hBY/Captura-de-Tela-2026-04-07-a-s-07-18-31.png" alt="Depoimento Google" loading="lazy"></article>
+      <article class="dep-item observe delay-2"><img src="https://i.postimg.cc/htKKQhND/Captura-de-Tela-2026-04-07-a-s-07-18-44.png" alt="Depoimento Google" loading="lazy"></article>
+      <article class="dep-item observe delay-3"><img src="https://i.postimg.cc/rwqqRz7w/Captura-de-Tela-2026-04-07-a-s-07-18-54.png" alt="Depoimento Google" loading="lazy"></article>
+      <article class="dep-item observe delay-4"><img src="https://i.postimg.cc/gcgVJkQW/Captura-de-Tela-2026-04-07-a-s-15-23-59.png" alt="Depoimento Google" loading="lazy"></article>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== 11. CONTATO E ENDEREÇO ===== -->
+<section class="contato-section section" id="contato">
+  <div class="container">
+    <div class="observe">
+      <div class="kicker-line"><span class="kicker">Contato institucional</span></div>
+      <h2 class="section-title"><em>Vamos Conversar?</em></h2>
+      <p class="section-lead">Fale conosco por um dos canais abaixo.</p>
+    </div>
+    <div class="contato-grid">
+      <div class="channels observe-left">
+        <a class="channel" href="https://wa.me/5521973121010" target="_blank" rel="noreferrer">
+          <div class="channel-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413"/></svg>
+          </div>
+          <div>
+            <div class="channel-label">WhatsApp comercial</div>
+            <div class="channel-value">+55 21 97312-1010</div>
+          </div>
+        </a>
+        <a class="channel" href="https://www.deboracamilo.com.br/" target="_blank" rel="noreferrer">
+          <div class="channel-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <div>
+            <div class="channel-label">Site oficial</div>
+            <div class="channel-value">deboracamilo.com.br</div>
+          </div>
+        </a>
+        <a class="channel" href="https://instagram.com/dradeboracamilo" target="_blank" rel="noreferrer">
+          <div class="channel-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </div>
+          <div>
+            <div class="channel-label">Instagram</div>
+            <div class="channel-value">@dradeboracamilo</div>
+          </div>
+        </a>
+        <a class="channel" href="https://instagram.com/clinicadeboracamilo" target="_blank" rel="noreferrer">
+          <div class="channel-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </div>
+          <div>
+            <div class="channel-label">Instagram da Clínica</div>
+            <div class="channel-value">@clinicadeboracamilo</div>
+          </div>
+        </a>
+        <a class="channel" href="mailto:gestaodeboracamilo@gmail.com">
+          <div class="channel-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div class="channel-label">E-mail comercial</div>
+            <div class="channel-value">gestaodeboracamilo@gmail.com</div>
+          </div>
+        </a>
+      </div>
+      <div class="observe-right">
+        <div class="cta-block">
+          <a class="btn-wa" href="https://wa.me/5521973121010?text=Ol%C3%A1%2C%20Dra.%20D%C3%A9bora%21%20Recebi%20o%20portf%C3%B3lio%20institucional%20da%20cl%C3%ADnica%20e%20gostaria%20de%20conversar%20sobre%20uma%20parceria." target="_blank" rel="noreferrer">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413"/></svg>
+            Iniciar conversa no WhatsApp
+          </a>
+          <div class="address-card" style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.08); margin-top: 0;">
+            <div class="address-card-eyebrow">Endereço da clínica</div>
+            <div class="address-card-title" style="color:#fff; font-size:1.1rem">Todos os Santos · <em>Zona Norte</em></div>
+            <div class="address-lines" style="color:rgba(255,255,255,0.45)">
+              <span><strong style="color:rgba(255,255,255,0.7)">Rua José Bonifácio, 1050</strong></span>
+              <span>Bloco 2 · Sala 1216 · CEP 20770-240</span>
+              <span>Em frente ao Norte Shopping · Rio de Janeiro · RJ</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <img class="footer-logo" src="https://i.postimg.cc/V6SHCTS3/1.png" alt="Clínica Dra. Débora Camilo">
+      <div class="footer-copy">Clínica Dra. Débora Camilo · Programa de Parcerias Institucionais · 2026</div>
+      <div class="footer-links">
+        <a href="https://www.deboracamilo.com.br/" target="_blank">Site</a>
+        <a href="https://instagram.com/dradeboracamilo" target="_blank">Instagram</a>
+        <a href="https://wa.me/5521973121010" target="_blank">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in-view');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -48px 0px' });
+
+document.querySelectorAll('.observe, .observe-left, .observe-right').forEach(el => observer.observe(el));
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+</body>
+</html>
