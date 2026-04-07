@@ -1177,7 +1177,7 @@ footer {
 
   /* Bio */
   .bio-grid { grid-template-columns: 1fr !important; gap: 2rem; }
-  .bio-image-wrap img { height: 320px; }
+  .bio-image-wrap img { height: auto; min-height: 480px; }
   .bio-badges { grid-template-columns: 1fr 1fr; gap: 10px; }
   .bio-badge { padding: 0.875rem 1rem; }
 
@@ -1191,6 +1191,8 @@ footer {
   /* Quem somos */
   .quemsomos-grid { grid-template-columns: 1fr !important; gap: 2rem; }
   .quemsomos-img img { height: 280px; }
+  .quemsomos-badge { bottom: -80px; width: 140px; height: 140px; }
+  .quemsomos-badge img { width: 96px !important; }
   .quemsomos-stats { grid-template-columns: 1fr 1fr; }
   /* CTA final */
   .cta-final-btns { flex-direction: column; align-items: center; }
